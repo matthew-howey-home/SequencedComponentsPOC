@@ -4,7 +4,10 @@ use ieee.numeric_std.all;
 
 entity SequencedComponentsPOC is
 	Port (
-		POWER : out STD_LOGIC
+		DATA_INPUT		: in std_logic;
+
+		POWER 			: out std_logic;
+		INTERNAL_LED_0	: out std_logic
 	);
 end SequencedComponentsPOC;
 
@@ -32,4 +35,6 @@ begin
 			oscena => connected_to_oscena
       );
 
+	-- all outputs inverted as 0 is lit and 1 is unlit
+	INTERNAL_LED_0 <= not DATA_INPUT;
 end Behavioral;
