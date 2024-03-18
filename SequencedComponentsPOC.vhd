@@ -6,7 +6,7 @@ entity SequencedComponentsPOC is
 	Port (
 		DATA_INPUT		: in std_logic;
 
-		POWER 			: out std_logic;
+		POWER				: out std_logic;
 		INTERNAL_LED_0	: out std_logic
 	);
 end SequencedComponentsPOC;
@@ -33,7 +33,7 @@ begin
 		port map (
 			clkout => fast_clock,
 			oscena => connected_to_oscena
-      );
+		);
 
 	-- all outputs inverted as 0 is lit and 1 is unlit
 	INTERNAL_LED_0 <= not DATA_INPUT;
