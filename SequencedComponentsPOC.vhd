@@ -7,7 +7,9 @@ entity SequencedComponentsPOC is
 		DATA_INPUT		: in std_logic;
 
 		POWER				: out std_logic;
-		INTERNAL_LED_0	: out std_logic
+		INTERNAL_LED_0	: out std_logic;
+		INTERNAL_LED_1	: out std_logic;
+		INTERNAL_LED_2	: out std_logic
 	);
 end SequencedComponentsPOC;
 
@@ -15,6 +17,8 @@ architecture Behavioral of SequencedComponentsPOC is
 
 signal connected_to_oscena	: std_logic;
 signal fast_clock				: std_logic;
+signal slow_clock				: std_logic;
+signal input_enable			: std_logic;
 
 component Internal_Oscillator is
 	port (
@@ -22,6 +26,14 @@ component Internal_Oscillator is
 		oscena : in  std_logic
 	);
 end component Internal_Oscillator;
+
+component SlowClockGenerator is
+	port (
+		FastClock   : in std_logic;
+		SlowClock   : out std_logic;
+		InputEnable : out std_logic
+	);
+end component SlowClockGenerator;
 
 begin
 	POWER <= '1';
@@ -35,6 +47,15 @@ begin
 			oscena => connected_to_oscena
 		);
 
+	SlowClockGeneratorInstance : SlowClockGenerator
+		port map (
+			FastClock	=>	fast_clock,
+			InputEnable	=>	input_enable,
+			SlowClock	=>	slow_clock
+		);
+
 	-- all outputs inverted as 0 is lit and 1 is unlit
 	INTERNAL_LED_0 <= not DATA_INPUT;
+	INTERNAL_LED_1 <= not slow_clock;
+	INTERNAL_LED_2 <= not input_enable;
 end Behavioral;
