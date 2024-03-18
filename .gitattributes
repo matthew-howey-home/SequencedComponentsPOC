@@ -1,0 +1,4 @@
+# Prevent git from normalising line endings
+
+Internal_Oscillator.qsys -text
+Internal_Oscillator.sopcinfo -text
