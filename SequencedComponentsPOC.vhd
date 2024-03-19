@@ -9,7 +9,12 @@ entity SequencedComponentsPOC is
 		POWER				: out std_logic;
 		INTERNAL_LED_0	: out std_logic;
 		INTERNAL_LED_1	: out std_logic;
-		INTERNAL_LED_2	: out std_logic
+		INTERNAL_LED_2	: out std_logic;
+		INTERNAL_LED_3 : out std_logic;
+		INTERNAL_LED_4 : out std_logic;
+		INTERNAL_LED_5 : out std_logic;
+		INTERNAL_LED_6 : out std_logic;
+		INTERNAL_LED_7 : out std_logic
 	);
 end SequencedComponentsPOC;
 
@@ -19,6 +24,8 @@ signal connected_to_oscena	: std_logic;
 signal fast_clock				: std_logic;
 signal slow_clock				: std_logic;
 signal input_enable			: std_logic;
+signal register_output		: std_logic_vector(7 downto 0);
+signal register_input		: std_logic_vector(7 downto 0);
 
 component Internal_Oscillator is
 	port (
@@ -34,6 +41,18 @@ component SlowClockGenerator is
 		InputEnable : out std_logic
 	);
 end component SlowClockGenerator;
+
+component Eight_Bit_Register is
+	port (
+		Data_Input		: in std_logic_vector(7 downto 0);
+		Input_Enable	: in std_logic;
+		Clock				: in std_logic;
+		Output_Enable	: in std_logic;
+
+      Output			: out std_logic_vector(7 downto 0)
+	);
+end component Eight_Bit_Register;
+
 
 begin
 	POWER <= '1';
@@ -53,9 +72,28 @@ begin
 			InputEnable	=>	input_enable,
 			SlowClock	=>	slow_clock
 		);
+	
+	register_input <= "10101010";
+
+	Eight_Bit_Register_Instance : Eight_Bit_Register
+		port map (
+			Data_Input		=> register_input,
+			Input_Enable	=> input_enable,
+			Clock				=> slow_clock,
+			Output_Enable	=> '1',
+
+			Output			=> register_output
+		);
+			
 
 	-- all outputs inverted as 0 is lit and 1 is unlit
-	INTERNAL_LED_0 <= not DATA_INPUT;
-	INTERNAL_LED_1 <= not slow_clock;
-	INTERNAL_LED_2 <= not input_enable;
+	INTERNAL_LED_0 <= not register_output(0);
+	INTERNAL_LED_1 <= not register_output(1);
+	INTERNAL_LED_2 <= not register_output(2);
+	INTERNAL_LED_3 <= not register_output(3);
+	INTERNAL_LED_4 <= not register_output(4);
+	INTERNAL_LED_5 <= not register_output(5);
+	INTERNAL_LED_6 <= not register_output(6);
+	INTERNAL_LED_7 <= not register_output(7);
+	
 end Behavioral;
