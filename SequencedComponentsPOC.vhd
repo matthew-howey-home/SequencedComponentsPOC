@@ -26,6 +26,7 @@ signal slow_clock				: std_logic;
 signal input_enable			: std_logic;
 signal register_output		: std_logic_vector(7 downto 0);
 signal register_input		: std_logic_vector(7 downto 0);
+signal add_carry_out			: std_logic;
 
 component Internal_Oscillator is
 	port (
@@ -53,6 +54,16 @@ component Eight_Bit_Register is
 	);
 end component Eight_Bit_Register;
 
+component ADD_Component is
+	port (
+		input_1		: in std_logic_vector(7 downto 0);
+		input_2		: in std_logic_vector(7 downto 0);
+		carry_in		: in std_logic;
+		output		: out std_logic_vector(7 downto 0);
+      carry_out	: out std_logic
+	);
+end component ADD_Component;
+
 
 begin
 	POWER <= '1';
@@ -72,8 +83,6 @@ begin
 			InputEnable	=>	input_enable,
 			SlowClock	=>	slow_clock
 		);
-	
-	register_input <= "10101010";
 
 	Eight_Bit_Register_Instance : Eight_Bit_Register
 		port map (
@@ -83,6 +92,16 @@ begin
 			Output_Enable	=> '1',
 
 			Output			=> register_output
+		);
+		
+	ADD_Component_Instance : ADD_Component
+		port map (
+			input_1		=> register_output,
+			input_2		=> "00000001",
+			carry_in		=> '0',
+			
+			output		=> register_input,
+			carry_out	=> add_carry_out
 		);
 			
 
