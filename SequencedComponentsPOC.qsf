@@ -67,7 +67,7 @@ set_global_assignment -name SOURCE_FILE .gitignore
 set_global_assignment -name VHDL_FILE SequencedComponentsPOC.vhd
 set_location_assignment PIN_89 -to DATA_INPUT
 set_location_assignment PIN_21 -to INTERNAL_LED_0
-set_global_assignment -name VHDL_FILE output_files/SlowClockGenerator.vhd
+set_global_assignment -name VHDL_FILE SlowClockGenerator.vhd
 set_location_assignment PIN_22 -to INTERNAL_LED_1
 set_location_assignment PIN_24 -to INTERNAL_LED_2
 set_global_assignment -name VHDL_FILE D_Latch.vhd
