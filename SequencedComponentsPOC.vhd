@@ -30,10 +30,10 @@ architecture Behavioral of SequencedComponentsPOC is
 		);
 	end component Internal_Oscillator;
 
-	signal CONNECTED_TO_clkout : std_logic;
-   signal CONNECTED_TO_oscena : std_logic;
-	signal CLOCK_INPUT			: std_logic;
-	signal INPUT_ENABLE			: std_logic;
+	signal fast_clock : std_logic;
+   signal connected_to_oscena : std_logic;
+	signal slow_clock				: std_logic;
+	signal input_enable			: std_logic;
 	
 	signal register_output		: std_logic_vector(7 downto 0);
 	signal register_input	   : std_logic_vector(7 downto 0);
@@ -43,26 +43,26 @@ architecture Behavioral of SequencedComponentsPOC is
 	-- signal RESET: std_logic;
 	
 begin
-	CONNECTED_TO_oscena <= '1';
+	connected_to_oscena <= '1';
 	
-	 Internal_Oscillator_Instance : Internal_Oscillator
-        port map (
-            clkout => CONNECTED_TO_clkout,
-            oscena => CONNECTED_TO_oscena
-        );
+	Internal_Oscillator_Instance : Internal_Oscillator
+		port map (
+			clkout => fast_clock,
+			oscena => connected_to_oscena
+		);
 	
 	SlowClockGenerator: entity work.SlowClockGenerator
 	port map (
-		  FastClock	=> CONNECTED_TO_clkout,
-		  SlowClock => CLOCK_INPUT,
-		  InputEnable => INPUT_ENABLE
+		  FastClock	=> fast_clock,
+		  SlowClock => slow_clock,
+		  InputEnable => input_enable
    );
 	
 	Eight_Bit_Register: entity work.Eight_Bit_Register
 	port map (
 		  Data_Input	 => register_input,
-        Input_Enable	 => INPUT_ENABLE,
-		  Clock		    => CLOCK_INPUT,
+        Input_Enable	 => input_enable,
+		  Clock		    => slow_clock,
 		  Output_Enable => '1',
         Output		    => register_output 
    );
@@ -73,7 +73,6 @@ begin
         input_2	=> "00000001",
 		  carry_in	=> '0',
         Output		=> register_input,
-		  -- Output 	=> register_input,
 		  carry_out  => add_carry_out
    );
 	
