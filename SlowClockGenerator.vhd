@@ -13,10 +13,10 @@ architecture Behavioral of SlowClockGenerator is
     signal counter : natural := 0;
     signal slowClockInternal : std_logic := '0';
 	 signal inputEnableInternal : std_logic := '0';
-    constant switchInputEnableHigh : natural := 7500000;
-	 constant switchClockHigh : natural := 10000000;
-	 constant switchInputEnableLow : natural := 12500000;
-	 constant switchClockLow : natural := 20000000;
+    constant switchInputEnableHigh : natural := 75000000;
+	 constant switchClockHigh : natural := 100000000;
+	 constant switchInputEnableLow : natural := 125000000;
+	 constant switchClockLow : natural := 200000000;
 
 begin
     process(FastClock)
