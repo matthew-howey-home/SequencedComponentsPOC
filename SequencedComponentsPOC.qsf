@@ -65,7 +65,6 @@ set_location_assignment PIN_88 -to POWER
 set_global_assignment -name QIP_FILE Internal_Oscillator/synthesis/Internal_Oscillator.qip
 set_global_assignment -name SOURCE_FILE .gitignore
 set_global_assignment -name VHDL_FILE SequencedComponentsPOC.vhd
-set_location_assignment PIN_89 -to DATA_INPUT
 set_location_assignment PIN_21 -to INTERNAL_LED_0
 set_global_assignment -name VHDL_FILE SlowClockGenerator.vhd
 set_location_assignment PIN_22 -to INTERNAL_LED_1
@@ -83,4 +82,5 @@ set_location_assignment PIN_33 -to INTERNAL_LED_5
 set_location_assignment PIN_38 -to INTERNAL_LED_6
 set_location_assignment PIN_39 -to INTERNAL_LED_7
 set_global_assignment -name VHDL_FILE Full_Adder.vhd
+set_location_assignment PIN_89 -to RESET
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
