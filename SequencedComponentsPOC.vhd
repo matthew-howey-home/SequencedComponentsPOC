@@ -16,8 +16,6 @@ entity SequencedComponentsPOC is
 		  INTERNAL_LED_7 : out STD_LOGIC;
 
 		  POWER : out STD_LOGIC
-		  
-		  -- DATA_INPUT : in STD_LOGIC
     );
 end SequencedComponentsPOC;
 
@@ -39,8 +37,6 @@ architecture Behavioral of SequencedComponentsPOC is
 	signal register_input	   : std_logic_vector(7 downto 0);
 	signal add_output				: std_logic_vector(7 downto 0);
 	signal add_carry_out			: std_logic;
-	-- signal NOT_RESET : std_logic;
-	-- signal RESET: std_logic;
 	
 begin
 	connected_to_oscena <= '1';
@@ -98,7 +94,7 @@ begin
 	 INTERNAL_LED_4 <= not register_output(4);
 	 INTERNAL_LED_5 <= not register_output(5);
 	 INTERNAL_LED_6 <= not register_output(6);
-	 -- INTERNAL_LED_7 <= not register_output(7);
-	 INTERNAL_LED_7 <= not RESET; 
+	 INTERNAL_LED_7 <= not register_output(7);
+	 -- INTERNAL_LED_7 <= not RESET; 
 
 end Behavioral;
