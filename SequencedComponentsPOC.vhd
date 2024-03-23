@@ -72,19 +72,20 @@ begin
 		  input_1	=> register_output,
         input_2	=> "00000001",
 		  carry_in	=> '0',
-        Output		=> register_input,
+		  output => add_output,
+        -- output		=> register_input,
 		  carry_out  => add_carry_out
    );
 	
-	--Two_To_One_Byte_Mux: entity work.Two_To_One_Byte_Mux
-	-- port map (
-	--   input_1	 		=> add_output,
-	-- 	input_2		 	=> "00000000",
+	Two_To_One_Byte_Mux: entity work.Two_To_One_Byte_Mux
+	port map (
+		input_1	 		=> add_output,
+		input_2		 	=> "00000000",
       
-   --   selector	 		=> RESET,
+		selector	 		=> RESET,
 		
-	--	output			=> register_input
-   -- );
+		output			=> register_input
+   );
 	
 
 	 POWER <= '1';
